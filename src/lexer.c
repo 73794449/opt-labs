@@ -1,19 +1,22 @@
 #include "lexer.h"
 #include "bits/types.h"
-Lexer lexer = {NULL,0,1,1,'\0',SYMBOL_START,false};
+Lexer lexer = {NULL, 0, 1, 1, '\0', SYMBOL_START, false};
 
-
-
-void proc_lexer(char *_input_file) {
+void proc_lexer(char *_input_file)
+{
   FILE *__input_file;
   __input_file = fopen(_input_file, "r");
-  if (__input_file == NULL) {
-    add_to_errors(create_error_without_linecolumn(
-        (errorCount + 1), FILE_ACCESS, "Cannot open input file.", true));
-  } else {
+  if (__input_file == NULL)
+  {
+    add_to_errors(create_error_without_linecolumn(FILE_ACCESS, "Cannot open input file.", true));
+  }
+  else
+  {
     inp(__input_file);
-    do {
-      switch (lexer.symbolType) {
+    do
+    {
+      switch (lexer.symbolType)
+      {
       case SYMBOL_WS:
         ws(__input_file);
         break;
@@ -38,9 +41,8 @@ void proc_lexer(char *_input_file) {
       case SYMBOL_EOF:
         break;
       default:
-        add_to_errors(create_error_without_linecolumn(
-            errorCount++, LEXER_STATE, "Impossible if rrly, unknown category", true));
-        lexer.symbolType=SYMBOL_EOF;
+        add_to_errors(create_error_without_linecolumn(LEXER_STATE, "Impossible if rrly, unknown category", true));
+        lexer.symbolType = SYMBOL_EOF;
         break;
       };
     } while (lexer.symbolType != SYMBOL_EOF);
