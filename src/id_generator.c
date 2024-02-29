@@ -51,15 +51,15 @@ size_t get_id(size_t row, size_t col, __uint8_t type)
     {
     case SYMBOL_DIG:
         base = 501;
-        for(size_t i = 0; i < constantCount; i++)
+        for (size_t i = 0; i < constantCount; i++)
         {
-            if(!strcmp(lexer._buffer, _constants[i]._data))
+            if (!strcmp(lexer._buffer, _constants[i]._data))
             {
                 return _constants[i].code;
             }
         }
         base += constantCount;
-        add_to_constants(create_token_with_code(row,col,lexer._buffer,lexer.bufferSize,base));
+        add_to_constants(create_token_with_code(row, col, lexer._buffer, lexer.bufferSize, base));
         break;
     case SYMBOL_LET:
         if (get_keyword_id())
@@ -78,7 +78,7 @@ size_t get_id(size_t row, size_t col, __uint8_t type)
                 }
             }
             base += identifierCount;
-            add_to_identifiers(create_token_with_code(row,col,lexer._buffer,lexer.bufferSize,base));
+            add_to_identifiers(create_token_with_code(row, col, lexer._buffer, lexer.bufferSize, base));
         }
         break;
     case SYMBOL_DM1:
@@ -89,8 +89,7 @@ size_t get_id(size_t row, size_t col, __uint8_t type)
         break;
 
     default:
-        add_to_errors(create_error_without_linecolumn(
-            errorCount + 1, LEXER_STATE, "Impossible for get_code()", true));
+        add_to_errors(create_error_without_linecolumn(LEXER_STATE, "Impossible for get_code()", true));
         return 0;
     };
     return base;

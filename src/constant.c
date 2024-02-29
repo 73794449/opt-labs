@@ -8,11 +8,14 @@ void add_to_constants(Constant constant)
 {
   constantCount++;
   _constants = (Token *)realloc(_constants, constantCount * sizeof(Token));
-  if (_constants == NULL) {
-    add_to_errors(create_error_with_linecolumn(errorCount + 1, MEMORY_ACCESS,
+  if (_constants == NULL)
+  {
+    add_to_errors(create_error_with_linecolumn(MEMORY_ACCESS,
                                                "Cannot reallocate *_constants",
                                                true, constant.row, constant.col));
-  } else {
+  }
+  else
+  {
     _constants[constantCount - 1] = constant;
   }
 }

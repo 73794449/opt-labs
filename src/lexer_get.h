@@ -14,7 +14,7 @@ void let(FILE *__input_file);
 void dm1(FILE *__input_file);
 void dm2(FILE *__input_file);
 void com_begin(FILE *__input_file);
-void com_confirm(FILE *__input_file,size_t row, size_t col);
-void com_ending(FILE *__input_file,size_t row, size_t col);
+void com_confirm(FILE *__input_file, size_t row, size_t col);
+void com_ending(FILE *__input_file, size_t row, size_t col);
 void s_error(FILE *__input_file);
 #endif

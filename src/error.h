@@ -4,7 +4,8 @@
 #ifndef ERROR_H
 #define ERROR_H
 
-struct error {
+struct error
+{
   size_t number;
   __uint8_t state;
   char *_error_message;
@@ -28,9 +29,9 @@ extern size_t errorCount;
 extern bool gotError;
 extern bool gotWarning;
 
-Error create_error_without_linecolumn(size_t number, __uint8_t state,
+Error create_error_without_linecolumn(__uint8_t state,
                                       char *_error_message, bool critical);
-Error create_error_with_linecolumn(size_t number, __uint8_t state,
+Error create_error_with_linecolumn(__uint8_t state,
                                    char *_error_message, bool critical,
                                    size_t row, size_t col);
 Error create_error_def();
