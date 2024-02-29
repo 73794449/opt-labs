@@ -2,9 +2,9 @@
 ## Usage
 
     ./opt-lab1 <filename>
-    -f <filename> 		Input filename
-    -o <filename>		Output filename
-    -v					Verbose output
+    -f <filename>            Input filename
+    -o <filename>            Output filename
+    -v                       Verbose output
 
 ## Мета лабораторної роботи
 Метою лабораторної роботи «Розробка лексичного аналізатора» є засвоєння теоретичного матеріалу та набуття практичного досвіду і практичних навичок розробки лексичних аналізаторів (сканерів). 
