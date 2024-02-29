@@ -66,7 +66,7 @@
 
 ## Building
 
-    git clone https://github.com/73794449/opt-lab1.git
-    cd ./opt-lab1
-    gcc -g -O2 ./*.c -o opt-lab1
+    git clone https://github.com/73794449/opt-labs.git
+    cd ./opt-labs/src
+    gcc -g -O2 ./*.c -o opt-labs
 
