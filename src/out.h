@@ -1,9 +1,8 @@
+#include "token_structure.h"
 #ifndef OUT_H
 #define OUT_H
 #include "cli.h"
 #include "error.h"
-#include "lexer.h"
-#include "token.h"
 void print_params();
 void print_error(Error error);
 void print_errors();

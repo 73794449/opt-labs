@@ -1,5 +1,5 @@
 #include "out.h"
-#include <stdio.h>
+#include "lexer.h"
 int main(int argc, char *argv[]) {
   proc_cli(argc, argv);
   if (gotError) {
@@ -9,11 +9,10 @@ int main(int argc, char *argv[]) {
     proc_lexer(params._input_file);
   }
   if (params.verbose) {
-    print_errors();
-    out_file_lexer();
-  } else {
     out_file_lexer();
     print_file_out();
+  } else {
+    out_file_lexer();
   }
   return 0;
 }

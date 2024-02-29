@@ -1,7 +1,6 @@
 #ifndef CLI_H
 #define CLI_H
 #include "error.h"
-#include <stdbool.h>
 struct params {
   char *_input_file;
   char *_output_file;
