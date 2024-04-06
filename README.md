@@ -1,7 +1,7 @@
 # OPT-RGR(LAB2): "РОЗРОБКА СИНТАКСИЧНОГО АНАЛІЗАТОРА"
 ## Usage
 
-    ./opt-lab1 <filename>
+    ./opt-lab <filename>
     -f <filename>            Input filename
     -o <filename>            Output filename
     -v                       Verbose output
@@ -24,6 +24,8 @@
 * формування лістингу вхідної програми з повідомленнями про лексичні та синтаксичні помилки.
 
 ## Варіант 23
+### Syntax analizer:
+низхідний розбір за алгоритмом аналізуючої машини Кнута;
 ```
 <signal-program> --> <program>
 <program> --> PROGRAM <procedure-identifier> ;
@@ -70,5 +72,5 @@
 
     git clone https://github.com/73794449/opt-labs.git
     cd ./opt-labs/src
-    gcc -g -O2 ./*.c -o opt-labs
+    gcc -g -O2 ./*.c -o opt-lab
 
