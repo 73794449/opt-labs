@@ -19,10 +19,16 @@ bool has_critical()
   return false;
 }
 
+Error create_error_syntaxer(size_t row, size_t col, char* _expected, char* _here)
+{
+  Error error = {.state = SYNTAX_STATE,.row = row, .col = col,.number=errorCount+1,.critical=true,._expected=_expected,._here=_here, .syntaxer=true};
+  return error;
+}
+
 Error create_error_without_linecolumn(__uint8_t state,
                                       char *_error_message, bool critical)
 {
-  Error error = {errorCount + 1, state, _error_message, critical, false, 0, 0};
+  Error error = {errorCount + 1, state, _error_message, critical, false, 0, 0,NULL,NULL,false};
   return error;
 }
 
@@ -31,13 +37,13 @@ Error create_error_with_linecolumn(__uint8_t state,
                                    size_t row, size_t col)
 {
 
-  Error error = {errorCount + 1, state, _error_message, critical, true, row, col};
+  Error error = {errorCount + 1, state, _error_message, critical, true, row, col,NULL,NULL,false};
   return error;
 }
 
 Error create_error_def()
 {
-  Error error = {0, NOT_ERROR, "", false, false, 0, 0};
+  Error error = {0, NOT_ERROR, "", false, false, 0, 0,NULL,NULL,false};
   return error;
 }
 
