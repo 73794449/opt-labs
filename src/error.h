@@ -23,6 +23,7 @@ typedef struct error Error;
 #define FILE_ACCESS 1
 #define MEMORY_ACCESS 2
 #define LEXER_STATE 3
+#define SYNTAX_STATE 4
 
 extern Error *_errors;
 extern size_t errorCount;
@@ -37,5 +38,6 @@ Error create_error_with_linecolumn(__uint8_t state,
 Error create_error_def();
 void add_to_errors(Error error);
 bool has_critical();
+void clean_errors();
 
 #endif

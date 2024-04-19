@@ -12,7 +12,7 @@ __uint8_t symbol_type(char symbol)
     else if (symbol == '.' || symbol == ';' || symbol == '[' || symbol == ']' ||
              symbol == '=' || symbol == '+' || symbol == '-')
         category = SYMBOL_DM1;
-    else if (symbol == ':' || symbol == '<' || symbol == '>')
+    else if (symbol == ':' || symbol == '<' || symbol == '>' || symbol == '/' || symbol == '\\')
         category = SYMBOL_DM2;
     else if (symbol == '(')
         category = SYMBOL_COM_BEGIN;

@@ -58,3 +58,9 @@ void add_to_errors(Error error)
       gotWarning = true;
   }
 }
+
+void clean_errors()
+{
+  errorCount = 0;
+  _errors  = NULL;
+}

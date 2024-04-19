@@ -5,3 +5,6 @@ src/.vscode/settings.json
 .vscode/launch.json
 .vscode/settings.json
 src/build/Debug/outDebug
+src/output
+src/.vscode/.clang-format
+src/true_test.sig

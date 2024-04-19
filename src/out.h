@@ -3,6 +3,7 @@
 #define OUT_H
 #include "cli.h"
 #include "error.h"
+#include "tree.h"
 void print_params();
 void print_error(Error error);
 void print_errors();
@@ -12,4 +13,10 @@ void print_tokens();
 void out_file_lexer();
 void print_file_out();
 void out_file_errors();
+void out_file_syntax();
+void just_clean();
+void free_trees();
+void free_errors();
+void free_tokens();
+void free_tables();
 #endif

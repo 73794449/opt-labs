@@ -3,6 +3,8 @@
 #include "constant.h"
 #include "identifier.h"
 #include "lexer.h"
+#include "syntax.h"
+#include "strings.h"
 void print_params()
 {
   printf("Input file: %s\n", params._input_file);
@@ -16,16 +18,20 @@ void print_error(Error error)
   short int state = error.state;
   if (error.critical)
     critical = "Error";
-  if (state == 0)
+  if (state == LEXER_STATE)
     if (error.hasLineColumn)
       printf("#%ld|%s(Lexer)| Line->%ld, Column->%ld |: %s\n", error.number,
              critical, error.row, error.col, error._error_message);
     else
       printf("#%ld|%s(Lexer): %s\n", error.number, critical,
              error._error_message);
-  else if (state)
+  else if (state == FILE_ACCESS)
     printf("#%ld|%s(File IO): %s\n", error.number, critical,
            error._error_message);
+  else if (state == SYNTAX_STATE)
+    printf("#%ld|%s(Syntax): %s\n",error.number,critical,error._error_message); 
+  else if(state == MEMORY_ACCESS)
+    printf("#%ld|%s(Memory): %s\n",error.number,critical,error._error_message);   
   else
     printf("#%ld|%s(Unknown): %s\n", error.number, critical,
            error._error_message);
@@ -37,25 +43,28 @@ void get_error(Error error, FILE *__output_file)
   short int state = error.state;
   if (error.critical)
     critical = "Error";
-  if (state == 0)
+  if (state == LEXER_STATE)
     if (error.hasLineColumn)
-      fprintf(__output_file, "#%ld|%s(Lexer)| Line->%ld, Column->%ld |: %s\n",
-              error.number, critical, error.row, error.col,
-              error._error_message);
+      fprintf(__output_file,"#%ld|%s(Lexer)| Line->%ld, Column->%ld |: %s\n", error.number,
+             critical, error.row, error.col, error._error_message);
     else
-      fprintf(__output_file, "#%ld|%s(Lexer): %s\n", error.number, critical,
-              error._error_message);
-  else if (state)
-    fprintf(__output_file, "#%ld|%s(File IO): %s\n", error.number, critical,
-            error._error_message);
+      fprintf(__output_file,"#%ld|%s(Lexer): %s\n", error.number, critical,
+             error._error_message);
+  else if (state == FILE_ACCESS)
+    fprintf(__output_file,"#%ld|%s(File IO): %s\n", error.number, critical,
+           error._error_message);
+  else if (state == SYNTAX_STATE)
+    fprintf(__output_file,"#%ld|%s(Syntax): %s\n",error.number,critical,error._error_message); 
+  else if(state == MEMORY_ACCESS)
+    fprintf(__output_file,"#%ld|%s(Memory): %s\n",error.number,critical,error._error_message);   
   else
-    fprintf(__output_file, "#%ld|%s(Unknown): %s\n", error.number, critical,
-            error._error_message);
+    fprintf(__output_file,"#%ld|%s(Unknown): %s\n", error.number, critical,
+           error._error_message);
 }
 
 void print_errors()
 {
-  for (unsigned long int i = 0; i < errorCount; i++)
+  for (size_t i = 0; i < errorCount; i++)
   {
     print_error(_errors[i]);
   }
@@ -120,9 +129,70 @@ void print_file_out()
 
 void out_file_errors(FILE *__output_file)
 {
+  if(errorCount > 0){
   fprintf(__output_file, "ERRORS:\n");
+  }
   for (size_t i = 0; i < errorCount; i++)
   {
     get_error(_errors[i], __output_file);
   }
+  
+}
+void just_clean()
+{
+  clean_errors();
+}
+
+
+void out_node(t_tree* tree, FILE *__output_file, size_t level)
+{
+    for(size_t k = 0; k <  level; k++)
+        fprintf(__output_file,"|");
+
+    fprintf(__output_file,"%s\n", tree->value);
+
+    for(size_t i = 0; i < tree->branchesCount; i++)
+    {
+      out_node(tree->_branches[i],__output_file,level+1);
+    }
+}
+
+void out_file_syntax()
+{
+  FILE *__output_file;
+  __output_file = fopen(params._output_file, "a");
+  if (__output_file == NULL)
+  {
+    add_to_errors(create_error_without_linecolumn(FILE_ACCESS, "Cannot write to output file", true));
+  }
+  else
+  {
+    fprintf(__output_file, "SYNTAX:\n");
+    out_node(_tree,__output_file,0);
+  }
+  fprintf(__output_file,"\n");
+  out_file_errors(__output_file);
+  fclose(__output_file);
+}
+
+void free_errors()
+{
+  free(_errors);
+}
+
+void free_tokens()
+{
+  free(_tokens);
+}
+
+void free_tables()
+{
+  free(_constants);
+  free(_identifiers);
+  free(_strings);
+}
+
+void free_trees()
+{
+  free_tree(_tree);
 }

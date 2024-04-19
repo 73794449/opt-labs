@@ -6,11 +6,11 @@
 #include <string.h>
 #include <unistd.h>
 
-Params params = {NULL, NULL, false};
+Params params = {NULL, "output", false};
 
 void check_file_access(char *_file, bool inputFile)
 {
-  if (access(_file, F_OK) != 0)
+  if (access(_file, F_OK) == -1)
   {
     if (inputFile)
     {
