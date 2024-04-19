@@ -14,6 +14,8 @@
 Tree* _tree;
 
 size_t tokenIterator = 0;
+size_t lastBullet = true;
+char* _expected;
 
 Line ruler(Table table, size_t k) {
   for (size_t i = 0; i < table.linesCount; i++)
@@ -27,7 +29,12 @@ void proc_syntax() {
   Table table = create_knut_table();
   _tree = create_node(name_by_id(SIGNAL_PROGRAM), SIGNAL_PROGRAM);
   ProbablyResults run = probe(table, PROGRAM);
-  if (run.status) add_branch(_tree, run.result);
+  if (run.status)
+    add_branch(_tree, run.result);
+  else
+    add_to_errors(create_error_syntaxer(_tokens[tokenIterator].row,
+                                        _tokens[tokenIterator].col, _expected,
+                                        _tokens[tokenIterator]._data));
 }
 
 ProbablyResults probe(Table table, size_t i) {
@@ -87,7 +94,11 @@ ProbablyResults probe(Table table, size_t i) {
           i = rules(i).afAddr;
           state = true;
         } else {
-          if (rules(i).addr < 100) {
+          if (lastBullet) {
+            _expected = name_by_id(rules(i).addr);
+            lastBullet = false;
+          }
+          if (rules(i).addr < 100 && !rules(i).code.isTerm) {
             add_to_errors(create_error_syntaxer(
                 _tokens[tokenIterator].row, _tokens[tokenIterator].col,
                 rules(i).code._term, _tokens[tokenIterator]._data));
@@ -104,6 +115,7 @@ ProbablyResults probe(Table table, size_t i) {
     }
 
   } while (atNotFinished && state && errorCount < 1);
+
   ProbablyResults ret = {newTree, state};
   return ret;
 }
