@@ -2,26 +2,26 @@
 #include "knut_tables.h"
 #include "terms.h"
 
-KC new_code(size_t addr_to, char *term) {
-  KC kc = {addr_to, term, false};
-  if (term != NULL) kc.is_term = true;
-  return kc;
+Code new_code(size_t addrTo, char *_term) {
+  Code myCode = {addrTo, _term, false};
+  if (_term != NULL) myCode.isTerm = true;
+  return myCode;
 }
 
-KL new_line(size_t addr, KC code, bool AT, size_t AF_ADDR) {
-  KL kl = {addr, code, AT, AF_ADDR};
-  return kl;
+Line new_line(size_t addr, Code myCode, bool at, size_t afAddr) {
+  Line myLine = {addr, myCode, at, afAddr};
+  return myLine;
 }
 
-void insert(KNUT *kn, KL knut_line) {
-  kn->lines_count++;
-  kn->lines = (KL *)realloc(kn->lines, kn->lines_count * sizeof(KL));
-  if (kn->lines == NULL) {
+void insert(Table *_table, Line myLine) {
+  _table->linesCount++;
+  _table->lines =
+      (Line *)realloc(_table->lines, _table->linesCount * sizeof(Line));
+  if (_table->lines == NULL)
     add_to_errors(create_error_without_linecolumn(
         MEMORY_ACCESS, "Cannot reallocate *knut_lines", true));
-  } else {
-    kn->lines[kn->lines_count - 1] = knut_line;
-  }
+  else
+    _table->lines[_table->linesCount - 1] = myLine;
 }
 
 char *name_by_id(size_t addr) {
@@ -79,23 +79,19 @@ char *name_by_id(size_t addr) {
 
 /*
 rule(addr,addr_to,term,at_addr,af_addr)
-
 Creates new rule in knut table
-ADDR    CODE              AT_ADDR    AF_ADDR
-addr    addr_to | term    at_addr    af_addr
 */
-#define rule(addr, addr_to, term, at, af_addr) \
-  insert(&kn, new_line(addr, new_code(addr_to, term), at, af_addr))
 
+#define rule(addr, addr_to, term, at_addr, af_addr) \
+  insert(&myTable, new_line(addr, new_code(addr_to, term), at_addr, af_addr))
 
-
-KNUT create_knut_table() {
-  KNUT kn = {.lines_count = 0, .lines = NULL};
+Table create_knut_table() {
+  Table myTable = {.linesCount = 0, .lines = NULL};
   /*
   AT - ACTION TRUE
   AF - ACTION FALSE
   */
-  /*   ADDR ADDR_TO TERM AT_ADDR AF_ADDR*/
+  /*   ADDR ADDR_TO TERM AT AF_ADDR*/
   /*<signal-program> --> <program> */
   rule(0, SIGNAL_PROGRAM, NULL, false, ERROR);
   rule(1, PROGRAM, NULL, false, ERROR);
@@ -180,10 +176,9 @@ KNUT create_knut_table() {
   /*<procedure-identifier> --> <identifier>*/
   rule(60, IDENTIFIER, NULL, true, ERROR);
 
-
-  rule(UNSIGNED_INTEGER, 0, "",true,ERROR);
-  rule(IDENTIFIER,0,"",true,ERROR);
-  rule(STRING,0,"",true,ERROR);
-  rule(EMPTY,0,"",true,ERROR);
-  return kn;
+  rule(UNSIGNED_INTEGER, 0, "", true, ERROR);
+  rule(IDENTIFIER, 0, "", true, ERROR);
+  rule(STRING, 0, "", true, ERROR);
+  rule(EMPTY, 0, "", true, ERROR);
+  return myTable;
 }

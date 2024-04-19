@@ -1,5 +1,5 @@
-#include <stddef.h>
 #include <bits/types.h>
+#include <stddef.h>
 #ifndef ID_GENERATOR_H
 #define ID_GENERATOR_H
 

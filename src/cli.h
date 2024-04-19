@@ -1,8 +1,9 @@
 #ifndef CLI_H
 #define CLI_H
+
 #include "error.h"
-struct params
-{
+
+struct params {
   char *_input_file;
   char *_output_file;
   bool verbose;

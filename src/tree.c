@@ -1,41 +1,33 @@
-#include "tree.h"
+#include "symbol_type.h"
 #include "token.h"
-#include "symbolType.h"
-t_tree *create_node(char* value, size_t id)
-{
-    t_tree *t;
-    t = (t_tree *)malloc(sizeof(t_tree));
-    t->_branches = NULL;
-    t->branchesCount = 0;
-    t->value = value;
-    t->id = id;
-    return t;
+#include "tree.h"
+
+Tree *create_node(char *_value, size_t id) {
+  Tree *t;
+  t = (Tree *)malloc(sizeof(Tree));
+  t->_branches = NULL;
+  t->branchesCount = 0;
+  t->_value = _value;
+  t->id = id;
+  return t;
 }
 
-void add_branch(t_tree* origin, t_tree* tree)
-{
-    origin->branchesCount++;
-    origin->_branches = (t_tree**) realloc(origin->_branches,origin->branchesCount*sizeof(t_tree*));
-    if(origin->_branches == NULL)
-    {
-        add_to_errors(create_error_without_linecolumn(MEMORY_ACCESS,"Cannot reallocate *_branches",true));
-    }
-    else
-    {
-        tree->_parent = origin;
-        origin->_branches[origin->branchesCount-1] = tree;
-    }
+void add_branch(Tree *_origin, Tree *_tree) {
+  _origin->branchesCount++;
+  _origin->_branches = (Tree **)realloc(
+      _origin->_branches, _origin->branchesCount * sizeof(Tree *));
+  if (_origin->_branches == NULL)
+    add_to_errors(create_error_without_linecolumn(
+        MEMORY_ACCESS, "Cannot reallocate *_branches", true));
+  else {
+    _origin->_branches[_origin->branchesCount - 1] = _tree;
+  }
 }
 
-
-void free_tree(t_tree *tree)
-{
-    if(tree != 0)
-    {
-        for(size_t i = 0; i < tree->branchesCount; i++)
-            free(tree->_branches[i]);
-        if(tree->branchesCount != 0)
-            free(tree->_branches);
-        free(tree);
-    }
+void free_tree(Tree *_tree) {
+  if (_tree != 0) {
+    for (size_t i = 0; i < _tree->branchesCount; i++) free(_tree->_branches[i]);
+    if (_tree->branchesCount != 0) free(_tree->_branches);
+    free(_tree);
+  }
 }

@@ -6,6 +6,9 @@
 #include "out.h"
 #include "strings.h"
 #include "syntax.h"
+
+/*This file is not sweet, I know, but I am too lazy*/
+
 void print_params() {
   printf("Input file: %s\n", params._input_file);
   printf("Output file: %s\n", params._output_file);
@@ -137,13 +140,13 @@ void out_file_errors(FILE *__output_file) {
 }
 void just_clean() { clean_errors(); }
 
-void out_node(t_tree *tree, FILE *__output_file, size_t level) {
+void out_node(Tree *_my_tree, FILE *__output_file, size_t level) {
   for (size_t k = 0; k < level; k++) fprintf(__output_file, "|");
 
-  fprintf(__output_file, "%s\n", tree->value);
+  fprintf(__output_file, "%s\n", _my_tree->_value);
 
-  for (size_t i = 0; i < tree->branchesCount; i++) {
-    out_node(tree->_branches[i], __output_file, level + 1);
+  for (size_t i = 0; i < _my_tree->branchesCount; i++) {
+    out_node(_my_tree->_branches[i], __output_file, level + 1);
   }
 }
 

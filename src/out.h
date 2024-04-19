@@ -1,9 +1,11 @@
-#include "token_structure.h"
-#ifndef OUT_H
-#define OUT_H
 #include "cli.h"
 #include "error.h"
+#include "token_structure.h"
 #include "tree.h"
+
+#ifndef OUT_H
+#define OUT_H
+
 void print_params();
 void print_error(Error error);
 void print_errors();
@@ -19,4 +21,5 @@ void free_trees();
 void free_errors();
 void free_tokens();
 void free_tables();
+
 #endif

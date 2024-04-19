@@ -11,110 +11,99 @@
 #include "terms.h"
 #include "token.h"
 
-t_tree* _tree;
+Tree* _tree;
 
-size_t token_i = 0;
+size_t tokenIterator = 0;
 
-struct probe_res {
-  t_tree* result;
-  bool status;
-};
-typedef struct probe_res PR;
+Line ruler(Table table, size_t k) {
+  for (size_t i = 0; i < table.linesCount; i++)
+    if (table.lines[i].addr == k) return table.lines[i];
 
-PR probe(KNUT knut_table, size_t i);
-KL ruler(KNUT table, size_t k) {
-  for (size_t i = 0; i < table.lines_count; i++) {
-    if (table.lines[i].addr == k) {
-      return table.lines[i];
-    }
-  }
-  exit(0);
+  exit(EXIT_FAILURE);
 }
+#define rules(i) ruler(table, i)
 
-#define rules(i) ruler(knut_table, i)
 void proc_syntax() {
-  KNUT knut_table = create_knut_table();
-  size_t k = 3;
-  _tree = create_node(name_by_id(SIGNAL_PROGRAM), 0);
-  PR run = probe(knut_table, k);
+  Table table = create_knut_table();
+  _tree = create_node(name_by_id(SIGNAL_PROGRAM), SIGNAL_PROGRAM);
+  ProbablyResults run = probe(table, PROGRAM);
   if (run.status) add_branch(_tree, run.result);
 }
 
-PR probe(KNUT knut_table, size_t i) {
+ProbablyResults probe(Table table, size_t i) {
   bool state = false;
-  t_tree* new_one = create_node(name_by_id(i), i);
-  bool AT_NOT_FINISHED = true;
+  Tree* newTree = create_node(name_by_id(i), i);
+  bool atNotFinished = true;
   do {
-    if (!rules(i).code.is_term) {
-      PR inner_probe = probe(knut_table, rules(i).code.addr_to);
+    if (!rules(i).code.isTerm) {
+      ProbablyResults inner_probe = probe(table, rules(i).code.addrTo);
       if (inner_probe.status == true) {
-        if (rules(i).AT != true)
+        if (rules(i).atAddr != true)
           i++;
         else
-          AT_NOT_FINISHED = false;
-        add_branch(new_one, inner_probe.result);
+          atNotFinished = false;
+        add_branch(newTree, inner_probe.result);
         state = true;
       } else {
-        if (rules(i).AF_ADDR != ERROR) {
-          i = rules(i).AF_ADDR;
+        if (rules(i).afAddr != ERROR) {
+          i = rules(i).afAddr;
           state = true;
-        } else {
+        } else
           state = false;
-        }
       }
     } else {
       state = false;
       switch (rules(i).addr) {
         case UNSIGNED_INTEGER:
-          if (is_constant(_tokens[token_i].code)) {
-            add_branch(new_one, create_node(_tokens[token_i]._data, i));
+          if (is_constant(_tokens[tokenIterator].code)) {
+            add_branch(newTree, create_node(_tokens[tokenIterator]._data, i));
             state = true;
           }
           break;
         case IDENTIFIER:
-          if (is_identifier(_tokens[token_i].code)) {
-            add_branch(new_one, create_node(_tokens[token_i]._data, i));
+          if (is_identifier(_tokens[tokenIterator].code)) {
+            add_branch(newTree, create_node(_tokens[tokenIterator]._data, i));
             state = true;
           }
           break;
         case STRING:
-          if (is_stringy(_tokens[token_i].code)) {
-            add_branch(new_one, create_node(_tokens[token_i]._data, i));
+          if (is_stringy(_tokens[tokenIterator].code)) {
+            add_branch(newTree, create_node(_tokens[tokenIterator]._data, i));
             state = true;
           }
           break;
         case EMPTY:
-          add_branch(new_one, create_node(name_by_id(EMPTY), i));
+          add_branch(newTree, create_node(name_by_id(EMPTY), i));
           state = true;
           break;
         default:
-          if (strcmp(rules(i).code.term, _tokens[token_i]._data) == 0) {
-            add_branch(new_one, create_node(_tokens[token_i]._data, i));
+          if (strcmp(rules(i).code._term, _tokens[tokenIterator]._data) == 0) {
+            add_branch(newTree, create_node(_tokens[tokenIterator]._data, i));
             state = true;
           }
       };
       if (state == false) {
-        if (rules(i).AF_ADDR != ERROR) {
-          i = rules(i).AF_ADDR;
+        if (rules(i).afAddr != ERROR) {
+          i = rules(i).afAddr;
           state = true;
         } else {
-          if(rules(i).addr < 100){
+          if (rules(i).addr < 100) {
             add_to_errors(create_error_syntaxer(
-                _tokens[token_i].row, _tokens[token_i].col, rules(i).code.term,
-                _tokens[token_i]._data));
+                _tokens[tokenIterator].row, _tokens[tokenIterator].col,
+                rules(i).code._term, _tokens[tokenIterator]._data));
             break;
           }
         }
       } else {
-        if (rules(i).addr != EMPTY) token_i++;
-        if (rules(i).addr < 100 && rules(i).AT != true)
+        if (rules(i).addr != EMPTY) tokenIterator++;
+        if (rules(i).addr < 100 && rules(i).atAddr != true)
           i++;
         else
-          AT_NOT_FINISHED = false;
+          atNotFinished = false;
       }
     }
 
-  } while (AT_NOT_FINISHED && state && errorCount < 1);
-  PR ret = {new_one, state};
+  } while (atNotFinished && state && errorCount < 1);
+  ProbablyResults ret = {newTree, state};
   return ret;
 }

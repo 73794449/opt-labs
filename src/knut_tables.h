@@ -1,32 +1,30 @@
 #ifndef KNUT_TABLES_H
 #define KNUT_TABLES_H
-#include <stdlib.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
+struct code {
+  size_t addrTo;
+  char* _term;
+  bool isTerm;
+};
+typedef struct code Code;
 
-typedef struct knut_code
-{
-    size_t addr_to;
-    char* term;
-    bool is_term;
-} KC;
+struct line {
+  size_t addr;
+  Code code;
+  bool atAddr;
+  size_t afAddr;
+};
+typedef struct line Line;
 
-typedef struct knut_line 
-{
-    size_t addr;
-    KC code;
-    bool AT;
-    size_t AF_ADDR;
-} KL;
+struct table {
+  size_t linesCount;
+  Line* lines;
+};
+typedef struct table Table;
 
-typedef struct knut_table
-{
-    size_t lines_count;
-    KL* lines;
-} KNUT;
-
-KNUT create_knut_table();
+Table create_knut_table();
 char* name_by_id(size_t addr);
-bool created_rule(size_t number);
 
 #endif

@@ -1,10 +1,11 @@
-#include <stdio.h>
 #include <bits/types.h>
-#ifndef LEXER_GET_H
-#define LEXER_GET_H
+#include <stdio.h>
+
+#include "error.h"
 #include "lexer_structure.h"
 #include "token.h"
-#include "error.h"
+#ifndef LEXER_GET_H
+#define LEXER_GET_H
 
 __uint8_t symbol_type(char symbol);
 void inp(FILE *__input_file);
