@@ -14,7 +14,6 @@
 Tree* _tree;
 
 size_t tokenIterator = 0;
-size_t lastBullet = true;
 char* _expected;
 
 Line ruler(Table table, size_t k) {
@@ -32,14 +31,16 @@ void proc_syntax() {
   if (run.status)
     add_branch(_tree, run.result);
   else
-    add_to_errors(create_error_syntaxer(_tokens[tokenIterator].row,
-                                        _tokens[tokenIterator].col, _expected,
-                                        _tokens[tokenIterator]._data));
+    add_to_errors(create_error_syntaxer(
+        _tokens[tokenIterator].row, _tokens[tokenIterator].col,
+        run.result->_value, _tokens[run.result->id]._data));
 }
 
 ProbablyResults probe(Table table, size_t i) {
+  ProbablyResults ret = {false, NULL};
   bool state = false;
   Tree* newTree = create_node(name_by_id(i), i);
+  size_t savedTokenPos = tokenIterator;
   bool atNotFinished = true;
   do {
     if (!rules(i).code.isTerm) {
@@ -55,8 +56,12 @@ ProbablyResults probe(Table table, size_t i) {
         if (rules(i).afAddr != ERROR) {
           i = rules(i).afAddr;
           state = true;
-        } else
+        } else {
           state = false;
+          ret.result = inner_probe.result;
+          ret.status = state;
+          return ret;
+        }
       }
     } else {
       state = false;
@@ -94,15 +99,11 @@ ProbablyResults probe(Table table, size_t i) {
           i = rules(i).afAddr;
           state = true;
         } else {
-          if (lastBullet) {
-            _expected = name_by_id(rules(i).addr);
-            lastBullet = false;
-          }
-          if (rules(i).addr < 100 && !rules(i).code.isTerm) {
-            add_to_errors(create_error_syntaxer(
-                _tokens[tokenIterator].row, _tokens[tokenIterator].col,
-                rules(i).code._term, _tokens[tokenIterator]._data));
-            break;
+          if(rules(i).addr < 100){
+          ret.status = false;
+          ret.result = create_node(rules(i).code._term, tokenIterator);
+          tokenIterator=savedTokenPos;
+          return ret;
           }
         }
       } else {
@@ -116,6 +117,7 @@ ProbablyResults probe(Table table, size_t i) {
 
   } while (atNotFinished && state && errorCount < 1);
 
-  ProbablyResults ret = {newTree, state};
+  ret.result = newTree;
+  ret.status = state;
   return ret;
 }
