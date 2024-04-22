@@ -66,5 +66,5 @@
 
     git clone https://github.com/73794449/opt-labs.git
     cd ./opt-labs/src
-    gcc -g -O2 ./*.c -o opt-lab
+    make all
 
