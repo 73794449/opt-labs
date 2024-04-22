@@ -8,3 +8,8 @@ src/build/Debug/outDebug
 src/output
 src/.vscode/.clang-format
 src/true_test.sig
+src/outDebug.exe
+src/*.o
+src/**/*.o
+.vscode/
+src/.vscode/

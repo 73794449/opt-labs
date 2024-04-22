@@ -1,4 +1,4 @@
-#include <bits/types.h>
+#include <stdlib.h>
 #include <stddef.h>
 #include <stdlib.h>
 #ifndef TOKEN_STRUCTURE_H
@@ -14,7 +14,7 @@ struct token {
 typedef struct token Token;
 
 Token create_token(size_t row, size_t col, char *_data, size_t dataSize,
-                   __uint8_t type);
+                   unsigned short int type);
 
 Token create_token_with_code(size_t row, size_t col, char *_data,
                              size_t dataSize, size_t code);

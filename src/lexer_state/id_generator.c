@@ -34,7 +34,7 @@ size_t get_dm2_id() {
   return get_dm1_id();
 }
 
-size_t get_id(size_t row, size_t col, __uint8_t type) {
+size_t get_id(size_t row, size_t col, unsigned short int type) {
   size_t base = 0;
   switch (type) {
     case SYMBOL_DIG:

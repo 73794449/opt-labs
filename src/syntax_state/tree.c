@@ -1,5 +1,6 @@
 #include "symbol_type.h"
 #include "token.h"
+#include "error.h"
 #include "tree.h"
 
 Tree *create_node(char *_value, size_t id) {

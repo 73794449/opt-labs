@@ -3,9 +3,10 @@
 #include "constant.h"
 #include "identifier.h"
 #include "lexer.h"
-#include "out.h"
 #include "strings.h"
 #include "syntax.h"
+#include "out.h"
+
 
 /*This file is not sweet, I know, but I am too lazy*/
 
@@ -16,52 +17,52 @@ void print_params() {
 }
 void print_error(Error error) {
   char *critical = "Warning";
-  short int state = error.state;
+  unsigned short int state = error.state;
   if (error.critical) critical = "Error";
   if (state == LEXER_STATE)
     if (error.hasLineColumn)
-      printf("#%ld|%s(Lexer)| Line->%ld, Column->%ld |: %s\n", error.number,
+      printf("#%lld|%s(Lexer)| Line->%lld, Column->%lld |: %s\n", error.number,
              critical, error.row, error.col, error._error_message);
     else
-      printf("#%ld|%s(Lexer): %s\n", error.number, critical,
+      printf("#%lld|%s(Lexer): %s\n", error.number, critical,
              error._error_message);
   else if (state == FILE_ACCESS)
-    printf("#%ld|%s(File IO): %s\n", error.number, critical,
+    printf("#%lld|%s(File IO): %s\n", error.number, critical,
            error._error_message);
   else if (state == SYNTAX_STATE)
-    printf("#%ld|%s(Syntax): %s\n", error.number, critical,
+    printf("#%lld|%s(Syntax): %s\n", error.number, critical,
            error._error_message);
   else if (state == MEMORY_ACCESS)
-    printf("#%ld|%s(Memory): %s\n", error.number, critical,
+    printf("#%lld|%s(Memory): %s\n", error.number, critical,
            error._error_message);
   else
-    printf("#%ld|%s(Unknown): %s\n", error.number, critical,
+    printf("#%lld|%s(Unknown): %s\n", error.number, critical,
            error._error_message);
 }
 
 void get_error(Error error, FILE *__output_file) {
   char *critical = "Warning";
-  short int state = error.state;
+  unsigned short int state = error.state;
   if (error.critical) critical = "Error";
   if (state == LEXER_STATE)
     if (error.hasLineColumn)
-      fprintf(__output_file, "#%ld|%s(Lexer)| Line->%ld, Column->%ld |: %s\n",
+      fprintf(__output_file, "#%lld|%s(Lexer)| Line->%lld, Column->%lld |: %s\n",
               error.number, critical, error.row, error.col,
               error._error_message);
     else
-      fprintf(__output_file, "#%ld|%s(Lexer): %s\n", error.number, critical,
+      fprintf(__output_file, "#%lld|%s(Lexer): %s\n", error.number, critical,
               error._error_message);
   else if (state == FILE_ACCESS)
-    fprintf(__output_file, "#%ld|%s(File IO): %s\n", error.number, critical,
+    fprintf(__output_file, "#%lld|%s(File IO): %s\n", error.number, critical,
             error._error_message);
   else if (state == SYNTAX_STATE)
-    fprintf(__output_file, "#%ld|%s(Syntax): %s\n", error.number, critical,
+    fprintf(__output_file, "#%lld|%s(Syntax): %s\n", error.number, critical,
             error._error_message);
   else if (state == MEMORY_ACCESS)
-    fprintf(__output_file, "#%ld|%s(Memory): %s\n", error.number, critical,
+    fprintf(__output_file, "#%lld|%s(Memory): %s\n", error.number, critical,
             error._error_message);
   else
-    fprintf(__output_file, "#%ld|%s(Unknown): %s\n", error.number, critical,
+    fprintf(__output_file, "#%lld|%s(Unknown): %s\n", error.number, critical,
             error._error_message);
 }
 
@@ -69,7 +70,7 @@ void get_syntaxer_error(Error error, FILE *__output_file) {
   char *critical = "Warning";
   if (error.critical) critical = "Error";
   fprintf(__output_file,
-          "#%ld|%s(Syntax)| Line->%ld, Column->%ld |: \'%s\' expected, but "
+          "#%lld|%s(Syntax)| Line->%lld, Column->%lld |: \'%s\' expected, but "
           "\'%s\' found.\n",
           error.number, critical, error.row, error.col, error._expected,
           error._here);
@@ -82,13 +83,13 @@ void print_errors() {
 }
 void print_lexer() {
   printf("Current buffer: %s\n", lexer._buffer);
-  printf("Current row: %lu\n", lexer.row);
-  printf("Current col: %lu\n", lexer.col);
+  printf("Current row: %lld\n", lexer.row);
+  printf("Current col: %lld\n", lexer.col);
   printf("Current symbol: %c\n", lexer.symbol);
   printf("Current symbol type: %d\n", lexer.symbolType);
 }
 void print_token(Token token) {
-  printf("[%lu][%lu] %lu: %s\n", token.row, token.col, token.code, token._data);
+  printf("[%lld][%lld] %lld: %s\n", token.row, token.col, token.code, token._data);
 }
 void print_tokens() {
   for (unsigned long int i = 0; i < tokenCount; i++) {
@@ -106,7 +107,7 @@ void out_file_lexer() {
     fprintf(__output_file,
             "|Line  |Column|Code  |Data  \n+------+------+------+------\n");
     for (size_t i = 0; i < tokenCount; i++) {
-      fprintf(__output_file, "|%6ld|%6ld|%6ld|%s\n", _tokens[i].row,
+      fprintf(__output_file, "|%6lld|%6lld|%6lld|%s\n", _tokens[i].row,
               _tokens[i].col, _tokens[i].code, _tokens[i]._data);
     }
   }

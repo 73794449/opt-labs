@@ -4,6 +4,7 @@
 
 int main(int argc, char *argv[]) {
   proc_cli(argc, argv);
+  
   if (gotError) {
     print_errors();
     return -1;
@@ -33,5 +34,6 @@ int main(int argc, char *argv[]) {
   free_errors();
   free_tables();
   free_tokens();
+  
   return 0;
 }

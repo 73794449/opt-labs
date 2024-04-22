@@ -1,7 +1,7 @@
 #include "lexer_get.h"
 
-__uint8_t symbol_type(char symbol) {
-  __uint8_t category = 6;
+unsigned short int symbol_type(char symbol) {
+  unsigned short int category = 6;
   if ((symbol > 7 && symbol < 14) || symbol == 32)
     category = SYMBOL_WS;
   else if (symbol > 47 && symbol < 58)

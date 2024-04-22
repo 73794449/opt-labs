@@ -1,4 +1,4 @@
-#include "bits/types.h"
+#include "stdlib.h"
 #include "lexer.h"
 Lexer lexer = {NULL, 0, 1, 1, '\0', SYMBOL_START, false};
 

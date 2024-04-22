@@ -1,8 +1,6 @@
-#include "cli.h"
-#include "error.h"
 #include "token_structure.h"
-#include "tree.h"
-
+#include "error.h"
+#include "cli.h"
 #ifndef OUT_H
 #define OUT_H
 

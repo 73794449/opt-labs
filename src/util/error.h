@@ -1,4 +1,4 @@
-#include <bits/types.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include <stddef.h>
 #ifndef ERROR_H
@@ -6,7 +6,7 @@
 
 struct error {
   size_t number;
-  __uint8_t state;
+  unsigned short int state;
   char* _error_message;
   bool critical;
   bool hasLineColumn;
@@ -34,9 +34,9 @@ extern bool gotWarning;
 
 Error create_error_syntaxer(size_t row, size_t col, char* _expected,
                             char* _here);
-Error create_error_without_linecolumn(__uint8_t state, char* _error_message,
+Error create_error_without_linecolumn(unsigned short int state, char* _error_message,
                                       bool critical);
-Error create_error_with_linecolumn(__uint8_t state, char* _error_message,
+Error create_error_with_linecolumn(unsigned short int state, char* _error_message,
                                    bool critical, size_t row, size_t col);
 Error create_error_def();
 void add_to_errors(Error error);

@@ -1,4 +1,4 @@
-#include <bits/types.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 #include "error.h"
@@ -7,7 +7,7 @@
 #ifndef LEXER_GET_H
 #define LEXER_GET_H
 
-__uint8_t symbol_type(char symbol);
+unsigned short int symbol_type(char symbol);
 void inp(FILE *__input_file);
 void ws(FILE *__input_file);
 void dig(FILE *__input_file);

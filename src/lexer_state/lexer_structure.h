@@ -1,4 +1,3 @@
-#include <bits/types.h>
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -12,7 +11,7 @@ struct lexer {
   size_t row;
   size_t col;
   char symbol;
-  __uint8_t symbolType;
+  unsigned short int symbolType;
   bool inComment;
 };
 typedef struct lexer Lexer;
