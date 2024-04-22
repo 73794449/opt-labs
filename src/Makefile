@@ -2,8 +2,7 @@ CC=gcc
 CFLAGS=-Wall -Wextra -Wpedantic -Wshadow -Wformat=2 -Wcast-align -Wconversion -Wsign-conversion -Wnull-dereference -g3 -O0
 INCLUDE=-Isrc/util/ -Isrc/syntax_state/ -Isrc/lexer_state/
 
-
-SRCDIR=src/
+SRCDIR=$(CURDIR)/src/
 UTILDIR=$(SRCDIR)/util/
 SYNTAXDIR=$(SRCDIR)/syntax_state/
 LEXERDIR=$(SRCDIR)/lexer_state/

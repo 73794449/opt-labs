@@ -2,6 +2,7 @@
 #include "out.h"
 #include "syntax.h"
 
+
 int main(int argc, char *argv[]) {
   proc_cli(argc, argv);
   

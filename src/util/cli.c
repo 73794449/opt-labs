@@ -7,6 +7,8 @@
 #include "cli.h"
 #include "error.h"
 
+#define WIN
+
 Params params = {NULL, "output", false};
 
 void check_file_access(char *_file, bool inputFile) {
@@ -23,7 +25,12 @@ void check_file_access(char *_file, bool inputFile) {
 void check_file_missing(char *_file) {
   FILE *_fp;
   if (_file != NULL) {
+#ifdef WIN
+    _fp = fopen(_file, "w+");
+#endif
+#ifndef WIN
     _fp = fopen(_file, "w");
+#endif
 
     if (_fp == NULL)
       add_to_errors(create_error_without_linecolumn(

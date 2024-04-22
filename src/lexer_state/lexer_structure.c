@@ -4,7 +4,7 @@
 #include "lexer_structure.h"
 void add_buffer_symbol() {
   lexer._buffer =
-      (char *)realloc(lexer._buffer, (lexer.bufferSize + 1) * sizeof(char));
+      (char *)realloc(lexer._buffer, (lexer.bufferSize + 2) * sizeof(char));
   if (lexer._buffer == NULL)
     add_to_errors(create_error_with_linecolumn(
         LEXER_STATE, "Cannot resize *buff", true, lexer.row, lexer.col));
