@@ -1,0 +1,9 @@
+**/.vscode
+*.o
+**/.o
+**/**/*.o
+*.exe
+**/*.exe
+output
+test.sig
+outDebug.exe
