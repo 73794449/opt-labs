@@ -20,7 +20,8 @@ void add_to_constants(Constant constant) {
 
 bool is_constant(size_t tokenCode) {
   for (size_t i = 0; i < constantCount; i++)
-    if (tokenCode == _constants[i].code) return true;
+    if (tokenCode == _constants[i].code)
+      return true;
 
   return false;
 }

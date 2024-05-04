@@ -3,22 +3,23 @@
 #include "constant.h"
 #include "identifier.h"
 #include "lexer.h"
+#include "out.h"
 #include "strings.h"
 #include "syntax.h"
-#include "out.h"
-
 
 /*This file is not sweet, I know, but I am too lazy*/
 
 void print_params() {
   printf("Input file: %s\n", params._input_file);
   printf("Output file: %s\n", params._output_file);
-  if (params.verbose) printf("Verbose mode enabled\n");
+  if (params.verbose)
+    printf("Verbose mode enabled\n");
 }
 void print_error(Error error) {
   char *critical = "Warning";
   unsigned short int state = error.state;
-  if (error.critical) critical = "Error";
+  if (error.critical)
+    critical = "Error";
   if (state == LEXER_STATE)
     if (error.hasLineColumn)
       printf("#%lld|%s(Lexer)| Line->%lld, Column->%lld |: %s\n", error.number,
@@ -43,12 +44,13 @@ void print_error(Error error) {
 void get_error(Error error, FILE *__output_file) {
   char *critical = "Warning";
   unsigned short int state = error.state;
-  if (error.critical) critical = "Error";
+  if (error.critical)
+    critical = "Error";
   if (state == LEXER_STATE)
     if (error.hasLineColumn)
-      fprintf(__output_file, "#%lld|%s(Lexer)| Line->%lld, Column->%lld |: %s\n",
-              error.number, critical, error.row, error.col,
-              error._error_message);
+      fprintf(__output_file,
+              "#%lld|%s(Lexer)| Line->%lld, Column->%lld |: %s\n", error.number,
+              critical, error.row, error.col, error._error_message);
     else
       fprintf(__output_file, "#%lld|%s(Lexer): %s\n", error.number, critical,
               error._error_message);
@@ -68,7 +70,8 @@ void get_error(Error error, FILE *__output_file) {
 
 void get_syntaxer_error(Error error, FILE *__output_file) {
   char *critical = "Warning";
-  if (error.critical) critical = "Error";
+  if (error.critical)
+    critical = "Error";
   fprintf(__output_file,
           "#%lld|%s(Syntax)| Line->%lld, Column->%lld |: \'%s\' expected, but "
           "\'%s\' found.\n",
@@ -89,7 +92,8 @@ void print_lexer() {
   printf("Current symbol type: %d\n", lexer.symbolType);
 }
 void print_token(Token token) {
-  printf("[%lld][%lld] %lld: %s\n", token.row, token.col, token.code, token._data);
+  printf("[%lld][%lld] %lld: %s\n", token.row, token.col, token.code,
+         token._data);
 }
 void print_tokens() {
   for (unsigned long int i = 0; i < tokenCount; i++) {
@@ -142,7 +146,8 @@ void out_file_errors(FILE *__output_file) {
 void just_clean() { clean_errors(); }
 
 void out_node(Tree *_my_tree, FILE *__output_file, size_t level) {
-  for (size_t k = 0; k < level; k++) fprintf(__output_file, "|");
+  for (size_t k = 0; k < level; k++)
+    fprintf(__output_file, "|");
 
   fprintf(__output_file, "%s\n", _my_tree->_value);
 

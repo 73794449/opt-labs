@@ -13,7 +13,9 @@
 #define SYMBOL_COM_BEGIN 6
 #define SYMBOL_COM_CONFIRM 7
 #define SYMBOL_COM_ENDING 8
-#define SYMBOL_ERROR 10  // 0xA Unknown symbol
-#define SYMBOL_EOF 11    // 0xB End of file symbol
+#define SYMBOL_ERROR 10 // 0xA Unknown symbol
+#define SYMBOL_EOF 11   // 0xB End of file symbol
+
+unsigned short int symbol_type(char symbol);
 
 #endif

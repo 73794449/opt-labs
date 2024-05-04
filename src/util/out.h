@@ -1,6 +1,6 @@
-#include "token_structure.h"
-#include "error.h"
 #include "cli.h"
+#include "error.h"
+#include "token_structure.h"
 #ifndef OUT_H
 #define OUT_H
 

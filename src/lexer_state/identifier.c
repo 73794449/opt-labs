@@ -20,7 +20,8 @@ void add_to_identifiers(Identifier identifier) {
 
 bool is_identifier(size_t tokenCode) {
   for (size_t i = 0; i < identifierCount; i++)
-    if (tokenCode == _identifiers[i].code) return true;
+    if (tokenCode == _identifiers[i].code)
+      return true;
 
   return false;
 }

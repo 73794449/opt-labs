@@ -20,7 +20,8 @@ void add_to_strings(Stringy str) {
 
 bool is_stringy(size_t tokenCode) {
   for (size_t i = 0; i < stringsCount; i++)
-    if (tokenCode == _strings[i].code) return true;
+    if (tokenCode == _strings[i].code)
+      return true;
 
   return false;
 }
