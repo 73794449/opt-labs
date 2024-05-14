@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 Error *_errors = NULL;
 size_t errorCount = 0;
 bool gotError = false;
@@ -31,8 +32,11 @@ Error create_error_syntaxer(size_t row, size_t col, char *_expected,
 
 Error create_error_without_linecolumn(unsigned short int state,
                                       char *_error_message, bool critical) {
-  Error error = {errorCount + 1, state, _error_message, critical, false, 0, 0,
+  Error error = {errorCount + 1, state, NULL, critical, false, 0, 0,
                  NULL,           NULL,  false};
+
+  error._error_message=(char*)malloc(sizeof(char)*strlen(_error_message));
+  error._error_message=strcpy(error._error_message, _error_message);
   return error;
 }
 

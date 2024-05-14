@@ -158,24 +158,26 @@ Table create_knut_table() {
   rule(48, SUMMANDS_LIST, NULL, true, ERROR);
   /*<summands-list> --> <add-instruction> <summand> | <summands-list> |
    * <empty>*/
-  rule(49, ADD_INSTRUCTION, NULL, false, ERROR);
-  rule(50, SUMMAND, NULL, true, 51);
+  rule(49, ADD_INSTRUCTION, NULL, false, 54);
+  rule(50, SUMMAND, NULL, false, ERROR);
   rule(51, SUMMANDS_LIST, NULL, true, 52);
-  rule(52, EMPTY, NULL, true, ERROR);
+  rule(52, ADD_INSTRUCTION, NULL, false, 54);
+  rule(53, SUMMAND, NULL, true, ERROR);
+  rule(54, EMPTY, NULL, true, ERROR);
   /*<add-instruction> --> + | -*/
-  rule(53, 0, "+", true, 54);
-  rule(54, 0, "-", true, ERROR);
+  rule(55, 0, "+", true, 56);
+  rule(56, 0, "-", true, ERROR);
   /*<summand> --> <variable-identifier> | <unsigned-integer>*/
-  rule(55, VARIABLE_IDENTIFIER, NULL, true, 56);
-  rule(56, UNSIGNED_INTEGER, NULL, true, ERROR);
+  rule(57, VARIABLE_IDENTIFIER, NULL, true, 58);
+  rule(58, UNSIGNED_INTEGER, NULL, true, ERROR);
   /*<constant> --> <unsigned-integer>*/
-  rule(57, UNSIGNED_INTEGER, NULL, true, ERROR);
+  rule(59, UNSIGNED_INTEGER, NULL, true, ERROR);
   /*<variable-identifier> --> <identifier>*/
-  rule(58, IDENTIFIER, NULL, true, ERROR);
-  /*<constant-identifier> --> <identifier>*/
-  rule(59, IDENTIFIER, NULL, true, ERROR);
-  /*<procedure-identifier> --> <identifier>*/
   rule(60, IDENTIFIER, NULL, true, ERROR);
+  /*<constant-identifier> --> <identifier>*/
+  rule(61, IDENTIFIER, NULL, true, ERROR);
+  /*<procedure-identifier> --> <identifier>*/
+  rule(62, IDENTIFIER, NULL, true, ERROR);
 
   rule(UNSIGNED_INTEGER, 0, "", true, ERROR);
   rule(IDENTIFIER, 0, "", true, ERROR);

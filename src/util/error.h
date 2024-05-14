@@ -26,6 +26,7 @@ typedef struct error Error;
 #define MEMORY_ACCESS 2
 #define LEXER_STATE 3
 #define SYNTAX_STATE 4
+#define SEMANT_STATE 5
 
 extern Error *_errors;
 extern size_t errorCount;

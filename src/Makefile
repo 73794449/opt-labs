@@ -1,18 +1,20 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -Wpedantic -Wshadow -Wformat=2 -Wcast-align -Wconversion -Wsign-conversion -Wnull-dereference -g3 -O0
-INCLUDE=-I./util/ -I./syntax_state/ -I./lexer_state/
+INCLUDE=-I./util/ -I./syntax_state/ -I./lexer_state/ -I./semant_state/
 
 SRCDIR=./
 UTILDIR=$(SRCDIR)util/
 SYNTAXDIR=$(SRCDIR)syntax_state/
 LEXERDIR=$(SRCDIR)lexer_state/
+SEMANTDIR=$(SRCDIR)semant_state/
 
 SRC=$(wildcard $(SRCDIR)*.c)
 UTILSRC=$(wildcard $(UTILDIR)*.c)
 SYNTAXSRC=$(wildcard $(SYNTAXDIR)*.c)
 LEXERSRC=$(wildcard $(LEXERDIR)*.c)
+SEMANTSRC=$(wildcard $(SEMANTDIR)*.c)
 
-OBJ=$(SRC:.c=.o) $(UTILSRC:.c=.o) $(SYNTAXSRC:.c=.o) $(LEXERSRC:.c=.o) 
+OBJ=$(SRC:.c=.o) $(UTILSRC:.c=.o) $(SYNTAXSRC:.c=.o) $(LEXERSRC:.c=.o)  $(SEMANTSRC:.c=.o)
 
 EXECUTABLE=outDebug.exe
 

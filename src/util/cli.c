@@ -9,7 +9,7 @@
 
 #define WIN
 
-Params params = {NULL, "output", false, true, true, NULL};
+Params params = {NULL, "output", false, true, true, true, NULL};
 
 void check_file_access(char *_file, bool inputFile) {
   if (access(_file, F_OK) == -1) {
@@ -57,6 +57,8 @@ void proc_cli(int argc, char *argv[]) {
         params.out_syntax = false;
       else if (strcmp(argv[i], "-offlexer") == 0)
         params.out_lexer = false;
+      else if (strcmp(argv[i], "-offcodegen") == 0)
+        params.out_codegen = false;
       else if (strcmp(argv[i], "-v") == 0 && i + 1 < argc)
         params._verify_file = argv[++i];
     }

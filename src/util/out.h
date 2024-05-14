@@ -14,6 +14,7 @@ void out_file_lexer();
 void print_file_out();
 void out_file_errors();
 void out_file_syntax();
+void out_file_codegen();
 void just_clean();
 void free_trees();
 void free_errors();
