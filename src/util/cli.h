@@ -9,6 +9,7 @@ struct params {
   bool verbose;
   bool out_lexer;
   bool out_syntax;
+  bool out_codegen;
   char *_verify_file;
 };
 typedef struct params Params;

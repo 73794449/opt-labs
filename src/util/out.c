@@ -6,8 +6,11 @@
 #include "out.h"
 #include "strings.h"
 #include "syntax.h"
+#include "semant.h"
+
 
 /*This file is not sweet, I know, but I am too lazy*/
+
 
 void print_params() {
   printf("Input file: %s\n", params._input_file);
@@ -36,6 +39,9 @@ void print_error(Error error) {
   else if (state == MEMORY_ACCESS)
     printf("#%lld|%s(Memory): %s\n", error.number, critical,
            error._error_message);
+  else if (state == SEMANT_STATE)
+    printf("#%lld|%s(Semantics): %s\n", error.number, critical,
+           error._error_message);
   else
     printf("#%lld|%s(Unknown): %s\n", error.number, critical,
            error._error_message);
@@ -63,6 +69,9 @@ void get_error(Error error, FILE *__output_file) {
   else if (state == MEMORY_ACCESS)
     fprintf(__output_file, "#%lld|%s(Memory): %s\n", error.number, critical,
             error._error_message);
+    else if (state == SEMANT_STATE)
+    fprintf(__output_file,"#%lld|%s(Semantics): %s\n", error.number, critical,
+           error._error_message);        
   else
     fprintf(__output_file, "#%lld|%s(Unknown): %s\n", error.number, critical,
             error._error_message);
@@ -170,6 +179,26 @@ void out_file_syntax() {
   out_file_errors(__output_file);
   fclose(__output_file);
 }
+
+void out_file_codegen()
+ {
+  FILE *__output_file;
+  __output_file = fopen(params._output_file,"a");
+  if(__output_file == NULL)
+  {
+    add_to_errors(create_error_without_linecolumn(
+        FILE_ACCESS, "Cannot write to output file", true));
+  }
+  else
+  {
+    fprintf(__output_file, "CODEGEN:\n");
+    for(size_t i = 0; i < semant_final_count; i++)
+      fprintf(__output_file,"%s\n", semant_final[i]);
+
+    out_file_errors(__output_file);
+    fclose(__output_file);
+  }
+ }
 
 void free_errors() { free(_errors); }
 
