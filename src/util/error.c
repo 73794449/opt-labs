@@ -1,9 +1,8 @@
-#include <stdlib.h>
+#include "error.h"
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "error.h"
 Error *_errors = NULL;
 size_t errorCount = 0;
 bool gotError = false;
@@ -11,7 +10,8 @@ bool gotWarning = false;
 
 bool has_critical() {
   for (size_t i = 0; i < errorCount; i++)
-    if (_errors[i].critical) return true;
+    if (_errors[i].critical)
+      return true;
 
   return false;
 }
@@ -29,15 +29,16 @@ Error create_error_syntaxer(size_t row, size_t col, char *_expected,
   return error;
 }
 
-Error create_error_without_linecolumn(unsigned short int state, char *_error_message,
-                                      bool critical) {
+Error create_error_without_linecolumn(unsigned short int state,
+                                      char *_error_message, bool critical) {
   Error error = {errorCount + 1, state, _error_message, critical, false, 0, 0,
                  NULL,           NULL,  false};
   return error;
 }
 
-Error create_error_with_linecolumn(unsigned short int state, char *_error_message,
-                                   bool critical, size_t row, size_t col) {
+Error create_error_with_linecolumn(unsigned short int state,
+                                   char *_error_message, bool critical,
+                                   size_t row, size_t col) {
   Error error = {
       errorCount + 1, state, _error_message, critical, true, row, col,
       NULL,           NULL,  false};

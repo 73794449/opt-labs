@@ -9,13 +9,13 @@
 
 #define WIN
 
-Params params = {NULL, "output", false};
+Params params = {NULL, "output", false, true, true, NULL};
 
 void check_file_access(char *_file, bool inputFile) {
   if (access(_file, F_OK) == -1) {
     if (inputFile)
       add_to_errors(create_error_without_linecolumn(
-          FILE_ACCESS, "Missing access to input file", true));
+          FILE_ACCESS, "Missing access to input/verify file", true));
     else
       add_to_errors(create_error_without_linecolumn(
           FILE_ACCESS, "File for output does not exist, creating...", false));
@@ -47,14 +47,18 @@ void proc_cli(int argc, char *argv[]) {
     params._input_file = argv[1];
   else {
     for (int i = 1; i < argc; i++) {
-      if (strcmp(argv[i], "-f") == 0 && i + 1 < argc) {
-        params._input_file = argv[i + 1];
-        i++;
-      } else if (strcmp(argv[i], "-o") == 0 && i + 1 < argc) {
-        params._output_file = argv[i + 1];
-        i++;
-      } else if (strcmp(argv[i], "-v") == 0)
-        params.verbose = 1;
+      if (strcmp(argv[i], "-f") == 0 && i + 1 < argc)
+        params._input_file = argv[++i];
+      else if (strcmp(argv[i], "-o") == 0 && i + 1 < argc)
+        params._output_file = argv[++i];
+      else if (strcmp(argv[i], "-q") == 0)
+        params.verbose = 0;
+      else if (strcmp(argv[i], "-offsyntax") == 0)
+        params.out_syntax = false;
+      else if (strcmp(argv[i], "-offlexer") == 0)
+        params.out_lexer = false;
+      else if (strcmp(argv[i], "-v") == 0 && i + 1 < argc)
+        params._verify_file = argv[++i];
     }
   }
 
@@ -64,6 +68,8 @@ void proc_cli(int argc, char *argv[]) {
   } else {
     check_file_access(params._input_file, true);
     check_file_access(params._output_file, false);
+    if (params._verify_file != NULL)
+      check_file_access(params._verify_file, true);
     check_file_missing(params._output_file);
   }
 }

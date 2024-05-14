@@ -1,10 +1,11 @@
-#include "error.h"
 #include "knut_tables.h"
+#include "error.h"
 #include "terms.h"
 
 Code new_code(size_t addrTo, char *_term) {
   Code myCode = {addrTo, _term, false};
-  if (_term != NULL) myCode.isTerm = true;
+  if (_term != NULL)
+    myCode.isTerm = true;
   return myCode;
 }
 
@@ -26,54 +27,54 @@ void insert(Table *_table, Line myLine) {
 
 char *name_by_id(size_t addr) {
   switch (addr) {
-    case SIGNAL_PROGRAM:
-      return "<signal-program>";
-    case PROGRAM:
-      return "<program>";
-    case BLOCK:
-      return "<block>";
-    case DECLARATIONS:
-      return "<declarations>";
-    case CONSTANT_DECLARATIONS:
-      return "<constant-declarations>";
-    case CONSTANT_DECLARATIONS_LIST:
-      return "<constant-declarations-list>";
-    case CONSTANT_DECLARATION:
-      return "<constant-declaration>";
-    case STATEMENT:
-      return "<statement>";
-    case STATEMENTS_LIST:
-      return "<statements-list>";
-    case ALTERNATIVES_LIST:
-      return "<alternatives-list>";
-    case ALTERNATIVE:
-      return "<alternative>";
-    case EXPRESSION:
-      return "<expression>";
-    case SUMMANDS_LIST:
-      return "<summands-list>";
-    case ADD_INSTRUCTION:
-      return "<add-instruction>";
-    case SUMMAND:
-      return "<summand>";
-    case CONSTANT:
-      return "<constant>";
-    case VARIABLE_IDENTIFIER:
-      return "<variable-identifier>";
-    case CONSTANT_IDENTIFIER:
-      return "<constant-identifier>";
-    case PROCEDURE_IDENTIFIER:
-      return "<procedure-identifier>";
-    case UNSIGNED_INTEGER:
-      return "<unsigned-integer>";
-    case IDENTIFIER:
-      return "<identifier>";
-    case STRING:
-      return "<string>";
-    case EMPTY:
-      return "<empty>";
-    default:
-      return "<error>";
+  case SIGNAL_PROGRAM:
+    return "<signal-program>";
+  case PROGRAM:
+    return "<program>";
+  case BLOCK:
+    return "<block>";
+  case DECLARATIONS:
+    return "<declarations>";
+  case CONSTANT_DECLARATIONS:
+    return "<constant-declarations>";
+  case CONSTANT_DECLARATIONS_LIST:
+    return "<constant-declarations-list>";
+  case CONSTANT_DECLARATION:
+    return "<constant-declaration>";
+  case STATEMENT:
+    return "<statement>";
+  case STATEMENTS_LIST:
+    return "<statements-list>";
+  case ALTERNATIVES_LIST:
+    return "<alternatives-list>";
+  case ALTERNATIVE:
+    return "<alternative>";
+  case EXPRESSION:
+    return "<expression>";
+  case SUMMANDS_LIST:
+    return "<summands-list>";
+  case ADD_INSTRUCTION:
+    return "<add-instruction>";
+  case SUMMAND:
+    return "<summand>";
+  case CONSTANT:
+    return "<constant>";
+  case VARIABLE_IDENTIFIER:
+    return "<variable-identifier>";
+  case CONSTANT_IDENTIFIER:
+    return "<constant-identifier>";
+  case PROCEDURE_IDENTIFIER:
+    return "<procedure-identifier>";
+  case UNSIGNED_INTEGER:
+    return "<unsigned-integer>";
+  case IDENTIFIER:
+    return "<identifier>";
+  case STRING:
+    return "<string>";
+  case EMPTY:
+    return "<empty>";
+  default:
+    return "<error>";
   };
 }
 
@@ -82,7 +83,7 @@ rule(addr,addr_to,term,at_addr,af_addr)
 Creates new rule in knut table
 */
 
-#define rule(addr, addr_to, term, at_addr, af_addr) \
+#define rule(addr, addr_to, term, at_addr, af_addr)                            \
   insert(&myTable, new_line(addr, new_code(addr_to, term), at_addr, af_addr))
 
 Table create_knut_table() {

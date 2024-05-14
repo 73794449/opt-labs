@@ -1,7 +1,6 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-#include "symbol_type.h"
 #ifndef LEXER_STRUCTURE_H
 #define LEXER_STRUCTURE_H
 

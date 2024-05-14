@@ -1,5 +1,5 @@
-#include "id_generator.h"
 #include "token.h"
+#include "id_generator.h"
 
 Token *_tokens = NULL;
 size_t tokenCount = 0;

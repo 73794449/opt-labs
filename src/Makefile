@@ -1,11 +1,11 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -Wpedantic -Wshadow -Wformat=2 -Wcast-align -Wconversion -Wsign-conversion -Wnull-dereference -g3 -O0
-INCLUDE=-Isrc/util/ -Isrc/syntax_state/ -Isrc/lexer_state/
+INCLUDE=-I./util/ -I./syntax_state/ -I./lexer_state/
 
-SRCDIR=$(CURDIR)/src/
-UTILDIR=$(SRCDIR)/util/
-SYNTAXDIR=$(SRCDIR)/syntax_state/
-LEXERDIR=$(SRCDIR)/lexer_state/
+SRCDIR=./
+UTILDIR=$(SRCDIR)util/
+SYNTAXDIR=$(SRCDIR)syntax_state/
+LEXERDIR=$(SRCDIR)lexer_state/
 
 SRC=$(wildcard $(SRCDIR)*.c)
 UTILSRC=$(wildcard $(UTILDIR)*.c)
@@ -20,9 +20,9 @@ EXECUTABLE=outDebug.exe
 
 all: $(EXECUTABLE)
 
-true_test: $(EXECUTABLE) true_test.sig -o true_test_output
+test_lexer: 
 
-false_test: $(EXECUTABLE) false_test.sig -o false_test_output
+build: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJ)
 	$(CC) $(CFLAGS) $(INCLUDE) $^ -o $@

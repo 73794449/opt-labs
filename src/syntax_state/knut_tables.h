@@ -5,7 +5,7 @@
 
 struct code {
   size_t addrTo;
-  char* _term;
+  char *_term;
   bool isTerm;
 };
 typedef struct code Code;
@@ -20,11 +20,11 @@ typedef struct line Line;
 
 struct table {
   size_t linesCount;
-  Line* lines;
+  Line *lines;
 };
 typedef struct table Table;
 
 Table create_knut_table();
-char* name_by_id(size_t addr);
+char *name_by_id(size_t addr);
 
 #endif
