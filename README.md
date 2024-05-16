@@ -86,8 +86,8 @@
 Основна граматика мала недолік, а саме відсутність інших <statement> крім CASE OF, що призводило до циклічної залежності, бо <statement> CASE OF має відповідну залежність від <alternativeslist>, та <alternative> відповідно. Що й призводило до циклічної залежності CASE OF від самого себе.
 
 ```
-<alternatives-list> --> <alternative> <alternativeslist> | <empty>
 <statement> --> CASE <expression> OF <alternativeslist> ENDCASE ;
+<alternatives-list> --> <alternative> <alternativeslist> | <empty>
 <alternative> --> <expression> : /<statements-list>\
 <statements-list> --> <statement> <statements-list> | <empty>
 ```
