@@ -99,6 +99,7 @@
 ```
 
 ### Реалізація машини Кнута, таблиця реалізована у такому вигляді
+Дефініції addr_to можна знайти в ([terms.h](https://github.com/73794449/opt-labs/blob/codegen/src/syntax_state/terms.h)) 
 
 ```
   /*rule-id addr_to                     term        at     af */
