@@ -65,8 +65,10 @@ void proc_cli(int argc, char *argv[]) {
   }
 
   if (params._input_file == NULL) {
+    char v[200];
+    snprintf(v,200,"Input filename %s is inaccessible.",params._input_file);
     add_to_errors(create_error_without_linecolumn(
-        FILE_ACCESS, "Input filename is empty.", true));
+        FILE_ACCESS, v, true));
   } else {
     check_file_access(params._input_file, true);
     check_file_access(params._output_file, false);

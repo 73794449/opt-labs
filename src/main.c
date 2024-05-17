@@ -1,6 +1,5 @@
 #include "lexer.h"
 #include "out.h"
-#include "syntax.h"
 #include "semant.h"
 #include "verify.h"
 

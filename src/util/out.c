@@ -158,10 +158,11 @@ void out_node(Tree *_my_tree, FILE *__output_file, size_t level) {
   for (size_t k = 0; k < level; k++)
     fprintf(__output_file, "|");
 
-  fprintf(__output_file, "%s\n", _my_tree->_value);
-
+  if(_my_tree != NULL){
+    fprintf(__output_file, "%s\n", _my_tree->_value);
   for (size_t i = 0; i < _my_tree->branchesCount; i++) {
     out_node(_my_tree->_branches[i], __output_file, level + 1);
+  }
   }
 }
 

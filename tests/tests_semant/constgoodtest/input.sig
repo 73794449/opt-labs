@@ -1,0 +1,7 @@
+PROGRAM CONSTGOODTEST;
+CONST
+    SOME = 10;
+    SOME2 = 20;
+	BEGIN
+    ANY := 0;
+	END.

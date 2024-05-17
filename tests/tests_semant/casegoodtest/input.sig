@@ -1,0 +1,11 @@
+PROGRAM CASEGOODTEST;
+CONST
+	BEGIN
+    ELEM := 20 + 10;
+	CASE ELEM - 0 OF
+	40 - 10:
+	/ELEM := 20 + 10;\
+	20 + 30:
+	/ELEM1 := 30 + 10;\
+	ENDCASE;
+	END.
