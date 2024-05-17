@@ -1,0 +1,7 @@
+PROGRAM VARBADTEST;
+CONST
+    SOME = 20;
+	BEGIN
+    VARBADTEST := 40 + 20;
+    SOME := 50 + 40;
+	END.

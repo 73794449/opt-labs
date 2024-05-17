@@ -1,0 +1,15 @@
+PROGRAM MAXGOODTEST;
+CONST
+    SOME = 20;
+    SOME2 = 40;
+	BEGIN
+    VSOME := 10;
+    VSOME2 := VSOME + 40;
+    CASE VSOME2 + VSOME - 5 OF
+    VSOME - 1:
+        /RESULT1 := 40 + 5 - VSOME;\
+    VSOME + 5:
+        /RESULT2 := 50 + VSOME + 5;\
+    ENDCASE;
+    RESULT3 := VSOME2 + 5;
+	END.

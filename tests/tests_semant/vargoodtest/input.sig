@@ -1,0 +1,7 @@
+PROGRAM VARGOODTEST;
+CONST
+	BEGIN
+    SOME := 20 + 10 - 30;
+    SOME2 := SOME + 10;
+    SOME3 := SOME + SOME2;
+	END.
